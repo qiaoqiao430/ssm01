@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.dao.BillMapper">
+
+    <resultMap id="bill_map" type="Bill" autoMapping="true">
+        <id column="id" property="id"/>
+        <association property="provider" javaType="Provider" autoMapping="true">
+            <id column="id" property="id"/>
+        </association>
+    </resultMap>
+    <select id="queryList" resultMap="bill_map">
+        select
+            b.*,p.*
+        from
+            smbms_bill b ,smbms_provider p
+        where
+            b.providerId = p.id
+    </select>
+    <select id="count" resultType="int">
+        select
+            count(1)
+        from
+            smbms_bill
+        where
+            providerId=#{id}
+    </select>
+</mapper>
